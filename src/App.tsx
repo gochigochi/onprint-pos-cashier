@@ -15,9 +15,9 @@ function App() {
       setConnectedToServer(true)
     }
 
-    const printOrder = () => {
+    const printOrder = (args) => {
 
-      console.log("print order!")
+      console.log("print order!", args)
 
       const content: string | undefined = printRef.current?.innerHTML
       console.log("CONTENT", content)
@@ -34,7 +34,7 @@ function App() {
     }
 
     socket.on("connect", onConnect)
-    socket.on("new-order", printOrder)
+    socket.on("new-order", (args) => printOrder(args))
 
     return () => {
       socket.off("connect", onConnect)
