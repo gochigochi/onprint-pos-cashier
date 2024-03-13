@@ -33,12 +33,14 @@ function App() {
       }
     }
 
+    const handlePrintOrder = (args) => printOrder(args)
+
     socket.on("connect", onConnect)
-    socket.on("new-order", (args) => printOrder(args))
+    socket.on("new-order", handlePrintOrder)
 
     return () => {
       socket.off("connect", onConnect)
-      socket.on("new-order", printOrder)
+      socket.off("new-order", handlePrintOrder)
     }
 
   }, [])
