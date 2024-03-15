@@ -10,6 +10,8 @@ const Cart = () => {
         console.log(id)
     }
 
+    console.log("CART PRODUCTS....", cartProducts)
+
     return (
         <div className="bg-white flex flex-col basis-[450px] max-w-[450px] pt-8">
             <dl className="divide-y flex flex-col flex-1 overflow-auto px-4">
@@ -18,7 +20,7 @@ const Cart = () => {
                         <li key={product.id} className="flex py-4 justify-between">
                             <div className="flex gap-2">
                                 <p className="font-semibold">{product.qty}</p>
-                                <dt className="truncate max-w-60">{product.title}</dt>
+                                <dt className="truncate max-w-60">{product.name}</dt>
                             </div>
                             <div className="flex gap-10">
                                 <dd className="font-semibold">${product.price}</dd>

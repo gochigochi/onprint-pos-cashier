@@ -19,12 +19,7 @@ type ProductImage = {
     alt: string
 }
 
-export type CartProduct = {
-    id: number
-    title: string
-    price: number
-    qty: number
-}
+export type CartProduct = Pick<Product, 'id' | 'name' | 'price'> & { qty: number }
 
 export type Cart = {
     products: CartProduct[]
