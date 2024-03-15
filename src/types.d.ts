@@ -5,6 +5,14 @@ export type Product = {
     images: ProductImage[]
 }
 
+export type Category = {
+    id: number
+    name: string
+    slug: string
+    image: ProductImage
+    
+}
+
 type ProductImage = {
     id: number
     src: string
