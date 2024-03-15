@@ -15,7 +15,7 @@ const Categories = () => {
 
                 const response = await axios.get("/api/categories")
 
-                if (response.status !== 200 ) {
+                if (response.status !== 200) {
                     //setError
                     return
                 }
@@ -41,13 +41,11 @@ const Categories = () => {
                     categories.length !== 0 ?
                         categories.map(category => {
                             return (
-                                <article key={category.id} className="col-span-6 sm:col-span-4 lg:col-span-3 h-22 border border-zinc-300 rounded-lg">
-                                    <Link to={`/category/${category.id}`}>
-                                        <div className="p-2">
-                                            <h3>{category.name}</h3>
-                                        </div>
-                                    </Link>
-                                </article>
+                                <Link key={category.id} className="col-span-6 @xs/main:col-span-4 @md/main:col-span-3 aspect-square border border-zinc-00 bg-white rounded-lg" to={`/category/${category.id}`}>
+                                    <div className="p-2 flex h-full">
+                                        <h3>{category.name}</h3>
+                                    </div>
+                                </Link>
                             )
                         }) : null
                 }

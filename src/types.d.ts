@@ -18,3 +18,14 @@ type ProductImage = {
     src: string
     alt: string
 }
+
+export type CartProduct = {
+    id: number
+    title: string
+    price: number
+    qty: number
+}
+
+export type Cart = {
+    products: CartProduct[]
+}

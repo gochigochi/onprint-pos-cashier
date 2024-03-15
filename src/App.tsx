@@ -92,8 +92,7 @@ function App() {
     <Layout>
 
       {/* <SideBar connectedToServer={connectedToServer} /> */}
-      <main className="w-full flex-1 py-2 px-4
-        bg-indigo-50/50">
+      <main className="@container/main flex-1 py-2 px-4 bg-indigo-50/50 overflow-y-auto">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/categories" element={<Categories />} />
