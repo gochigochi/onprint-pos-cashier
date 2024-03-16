@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import type { Cart, CartProduct } from "../../types"
+import type { Cart, CartProduct, CartProductId } from "../../types"
 import type { PayloadAction } from "@reduxjs/toolkit"
 
 const initialState: Cart = {
@@ -19,10 +19,18 @@ const cartSlice = createSlice({
             } else {
                 state.products[index].qty += action.payload.qty
             }
+        },
+        removeProduct: (state, action: PayloadAction<CartProductId>) => {
 
+            const index = state.products.findIndex(product => product.id === action.payload)
+            state.products.splice(index, 1)
+        },
+        clearCart: (state) => {
+            console.log(state.products)
+            state.products = []
         }
     },
 })
 
-export const { addProduct } = cartSlice.actions
+export const { addProduct, removeProduct, clearCart } = cartSlice.actions
 export default cartSlice.reducer

@@ -47,8 +47,8 @@ function App() {
 
       console.log("print order!", args)
 
-      // setNewOrderId(args.data.id)
-      // notificationSound.play()
+      setNewOrderId(args.data.id)
+      notificationSound.play()
 
       // const content: string | undefined = printRef.current?.innerHTML
       // console.log("CONTENT", content)
@@ -106,7 +106,7 @@ function App() {
           newOrdersNotifications.length !== 0 ?
             newOrdersNotifications.map(notification => {
               return (
-                <div key={notification.id} onClick={() => handleClose(notification.id)} className="bg-zinc-700 rounded-md p-3 cursor-pointer pointer-events-auto">
+                <div key={notification.id} onClick={() => handleClose(notification.id)} className="bg-white rounded-md p-3 shadow-md cursor-pointer pointer-events-auto">
                   <p>Tenes un nuevo pedido <span>[id: {notification.id}]</span></p>
                 </div>
               )

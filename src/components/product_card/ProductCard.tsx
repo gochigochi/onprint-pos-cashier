@@ -1,8 +1,8 @@
+import { useState } from "react"
 import { useDispatch } from "react-redux"
+import { addProduct } from "../../store/cart/cartSlice"
 import type { AppDispatch } from "../../store/store"
 import type { Product } from "../../types"
-import { useState } from "react"
-import { addProduct } from "../../store/cart/cartSlice"
 
 type PropsTypes = {
   product: Product

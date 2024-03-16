@@ -1,16 +1,67 @@
-import { useSelector } from "react-redux"
+import axios from "axios"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { removeProduct, clearCart } from "../../store/cart/cartSlice"
 import type { RootState } from "../../store/store"
-import type { CartProduct } from "../../types"
+import type { AppDispatch } from "../../store/store"
+import type { CartProduct, CartProductId } from "../../types"
 
 const Cart = () => {
 
     const cartProducts = useSelector<RootState, CartProduct[]>(state => state.cart.products)
+    const dispatch = useDispatch<AppDispatch>()
+    
+    // TODO maybe use reducer
+    const [disabled, setDisabled] = useState(cartProducts.length === 0)
+    const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState(false)
 
-    const handleDelete = (id: number) => {
-        console.log(id)
+    useEffect(() => cartProducts.length === 0 ? setDisabled(true) : setDisabled(false), [cartProducts])
+
+    const handleClearCart = () => {
+        dispatch(clearCart())
     }
 
-    console.log("CART PRODUCTS....", cartProducts)
+    const handleDelete = (id: CartProductId) => {
+        console.table([cartProducts, id])
+        dispatch(removeProduct(id))
+    }
+
+    const handleCheckout = async () => {
+
+        setLoading(true)
+        setDisabled(true)
+
+        try {
+
+            const orderData = {
+                products: cartProducts,
+                isStore: true,
+            }
+
+            const response = await axios.post("/api/new-order", orderData)
+
+            console.log("RESPONSE.....", response)
+
+            setSuccess(true)
+
+        } catch (err) {
+            //setError
+            console.log(err)
+        } finally {
+            // setLoading(false)
+            // setDisabled(false)
+            setTimeout(() => success && setSuccess(false), 5000)
+
+            setTimeout(() => {
+                setLoading(false)
+                setDisabled(false)
+            })
+        }
+
+        console.log("CART PRODUCTS....", cartProducts)
+    }
+
 
     return (
         <div className="bg-white flex flex-col basis-[450px] max-w-[450px] pt-8">
@@ -45,8 +96,14 @@ const Cart = () => {
                 </div>
             </dl>
             <div className="grid grid-cols-12 gap-2 p-4">
-                <button className="ghost-button col-span-4">Clear</button>
-                <button className="primary-button col-span-8">Pay</button>
+                <button onClick={handleClearCart} className="ghost-button col-span-4">Clear</button>
+                <button
+                    onClick={handleCheckout}
+                    className={`primary-button col-span-8 disabled:opacity-50 disabled:hover:bg-green-500`}
+                    disabled={disabled}
+                >
+                    Checkout
+                </button>
             </div>
         </div>
     )
