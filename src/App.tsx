@@ -7,6 +7,9 @@ import SideBar from "./components/layout/side_bar/SideBar"
 import Categories from "./pages/categories/Categories"
 import Products from "./pages/products/Products"
 import Layout from "./components/layout/Layout"
+import { useDispatch } from "react-redux"
+import { setStatus } from "./store/status/statusSlice"
+import type { AppDispatch } from "./store/store"
 
 type OrderNotification = {
   id: number
@@ -14,7 +17,8 @@ type OrderNotification = {
 
 function App() {
 
-  const [connectedToServer, setConnectedToServer] = useState(false)
+  // const [connectedToServer, setConnectedToServer] = useState(false)
+  const dispatch = useDispatch<AppDispatch>()
   const [newOrdersNotifications, setNewOrdersNotifications] = useState<OrderNotification[]>([])
   const [newOrderId, setNewOrderId] = useState(0)
   const notificationSound = new Audio("./notification.mp3")
@@ -28,7 +32,7 @@ function App() {
     setNewOrdersNotifications(filtered)
   }
 
-  console.log(newOrdersNotifications)
+  // console.log(newOrdersNotifications)
 
   useEffect(() => {
     if (newOrderId !== 0) {
@@ -40,28 +44,31 @@ function App() {
 
     const onConnect = () => {
       console.log("connected to server")
-      setConnectedToServer(true)
+      dispatch(setStatus({ status: true}))
+      // setConnectedToServer(true)
     }
 
     const printOrder = (args) => {
 
-      console.log("print order!", args)
+      // console.log("print order!", args)
 
-      setNewOrderId(args.data.id)
-      notificationSound.play()
+      if (!args.isStore) {
+        setNewOrderId(args.data.id)
+        notificationSound.play()
+      }
 
-      // const content: string | undefined = printRef.current?.innerHTML
+      const content: string | undefined = printRef.current?.innerHTML
       // console.log("CONTENT", content)
-      // const printWindow = windowRef.current.open("")
+      const printWindow = windowRef.current.open("")
 
-      // if (printWindow && content) {
-      //   printWindow.document.write(content)
-      //   printWindow.document.close()
-      //   printWindow.print()
-      //   printWindow.close()
-      // } else {
-      //   console.error("Ocurrió un error al intentar imprimir la ventana")
-      // }
+      if (printWindow && content) {
+        printWindow.document.write(content)
+        printWindow.document.close()
+        printWindow.print()
+        printWindow.close()
+      } else {
+        console.error("Ocurrió un error al intentar imprimir la ventana")
+      }
     }
 
     const handlePrintOrder = (args) => printOrder(args)

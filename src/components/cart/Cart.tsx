@@ -5,12 +5,13 @@ import { removeProduct, clearCart } from "../../store/cart/cartSlice"
 import type { RootState } from "../../store/store"
 import type { AppDispatch } from "../../store/store"
 import type { CartProduct, CartProductId } from "../../types"
+import Spinner from "../spinner/Spinner"
 
 const Cart = () => {
 
     const cartProducts = useSelector<RootState, CartProduct[]>(state => state.cart.products)
     const dispatch = useDispatch<AppDispatch>()
-    
+
     // TODO maybe use reducer
     const [disabled, setDisabled] = useState(cartProducts.length === 0)
     const [loading, setLoading] = useState(false)
@@ -56,7 +57,7 @@ const Cart = () => {
             setTimeout(() => {
                 setLoading(false)
                 setDisabled(false)
-            })
+            }, 3000)
         }
 
         console.log("CART PRODUCTS....", cartProducts)
@@ -96,13 +97,19 @@ const Cart = () => {
                 </div>
             </dl>
             <div className="grid grid-cols-12 gap-2 p-4">
-                <button onClick={handleClearCart} className="ghost-button col-span-4">Clear</button>
+                <button
+                    onClick={handleClearCart}
+                    className="ghost-button col-span-4 disabled:opacity-50 disabled:hover:bg-zinc-300"
+                    disabled={disabled}
+                >
+                    Clear
+                </button>
                 <button
                     onClick={handleCheckout}
                     className={`primary-button col-span-8 disabled:opacity-50 disabled:hover:bg-green-500`}
                     disabled={disabled}
                 >
-                    Checkout
+                    {loading ? <Spinner /> : "Checkout"}
                 </button>
             </div>
         </div>
