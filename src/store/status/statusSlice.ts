@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 
-const statusSlice = createSlice({
+export const statusSlice = createSlice({
     name: "status",
     initialState: { status: false },
     reducers: {
@@ -11,4 +11,3 @@ const statusSlice = createSlice({
 })
 
 export const { setStatus } = statusSlice.actions
-export default statusSlice.reducer

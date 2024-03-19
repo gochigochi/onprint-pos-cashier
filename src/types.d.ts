@@ -23,7 +23,8 @@ export type CartProduct = Pick<Product, 'id' | 'name' | 'price'> & { qty: number
 
 export type Cart = { 
     products: CartProduct[] 
-    total: number
+    total: string
 }
 
 export type CartProductId = CartProduct["id"]
+export type CartTotal = Cart["total"]

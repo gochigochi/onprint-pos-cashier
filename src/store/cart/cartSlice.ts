@@ -4,10 +4,15 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 
 const initialState: Cart = {
     products: [],
-    total: 0
+    total: "0"
 }
 
-const cartSlice = createSlice({
+const getTotal = (state: Cart) => {
+    const total = state.products.reduce((acc, curr) => acc + Number(curr.price) * curr.qty, 0 )
+    return total.toFixed(2)
+}
+
+export const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
@@ -20,20 +25,19 @@ const cartSlice = createSlice({
             } else {
                 state.products[index].qty += action.payload.qty
             }
+
+            state.total = getTotal(state)
         },
         removeProduct: (state, action: PayloadAction<CartProductId>) => {
             const index = state.products.findIndex(product => product.id === action.payload)
             state.products.splice(index, 1)
+            state.total = getTotal(state) 
         },
         clearCart: (state) => {
-            console.log(state.products)
             state.products = []
+            state.total = getTotal(state)
         },
-        cartTotal: (state) => {
-            state.total = state.products.reduce((acc, curr) => acc + Number(curr.price) * curr.qty, 0 )
-        }
     },
 })
 
-export const { addProduct, removeProduct, clearCart, cartTotal } = cartSlice.actions
-export default cartSlice.reducer
+export const { addProduct, removeProduct, clearCart } = cartSlice.actions

@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { removeProduct, clearCart } from "../../store/cart/cartSlice"
 import type { RootState } from "../../store/store"
 import type { AppDispatch } from "../../store/store"
-import type { CartProduct, CartProductId } from "../../types"
+import type { CartProduct, CartProductId, CartTotal } from "../../types"
 import Spinner from "../spinner/Spinner"
 
 const Cart = () => {
 
     const cartProducts = useSelector<RootState, CartProduct[]>(state => state.cart.products)
     const dispatch = useDispatch<AppDispatch>()
+    const total = useSelector<RootState, CartTotal>(state => state.cart.total)
 
     // TODO maybe use reducer
     const [disabled, setDisabled] = useState(cartProducts.length === 0)
@@ -46,6 +47,8 @@ const Cart = () => {
 
             setSuccess(true)
 
+            dispatch(clearCart())
+
         } catch (err) {
             //setError
             console.log(err)
@@ -59,13 +62,11 @@ const Cart = () => {
                 setDisabled(false)
             }, 3000)
         }
-
-        console.log("CART PRODUCTS....", cartProducts)
     }
 
 
     return (
-        <div className="bg-white flex flex-col basis-[450px] max-w-[450px] pt-8">
+        <div className="bg-white flex flex-col basis-[350px] max-w-[450px] pt-8">
             <dl className="divide-y flex flex-col flex-1 overflow-auto px-4">
                 {
                     cartProducts.map(product => (
@@ -89,11 +90,11 @@ const Cart = () => {
             <dl className="divide-y border-t">
                 <div className="flex justify-between p-4">
                     <dt>Subtotal</dt>
-                    <dl>$500</dl>
+                    <dl>CHF. {total}</dl>
                 </div>
                 <div className="flex justify-between p-4">
                     <dt className="text-xl font-semibold">Total</dt>
-                    <dl className="text-xl font-bold">$550</dl>
+                    <dl className="text-xl font-bold">CHF. {total}</dl>
                 </div>
             </dl>
             <div className="grid grid-cols-12 gap-2 p-4">

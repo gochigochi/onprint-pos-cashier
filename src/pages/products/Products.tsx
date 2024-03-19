@@ -1,48 +1,50 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+// import axios from "axios"
+// import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import ProductCard from "../../components/product_card/ProductCard"
-import type { Product } from "../../types"
+// import ProductCard from "../../components/product_card/ProductCard"
+// import type { Product } from "../../types"
+import ErrorBoundary from "../../components/error_boundary/ErrorBoundary"
+import ProductsList from "../../components/products_list/ProductsList"
+import ErrorFallback from "../../components/error_fallback/ErrorFallback"
 
 const Products = () => {
 
     const { id } = useParams()
-    const [products, setProducts] = useState<Product[]>([])
+    const errorMsg = "An error ocurred fetching products"
 
-    useEffect(() => {
+    // const [products, setProducts] = useState<Product[]>([])
 
-        const getProduct = async () => {
+    // useEffect(() => {
 
-            try {
+    //     const getProduct = async () => {
 
-                const response = await axios.post("/api/products", { id })
+    //         try {
 
-                if (response.status !== 200) {
-                    //setError
-                    return
-                }
+    //             const response = await axios.post("/api/products", { id })
 
-                setProducts(response.data.products)
+    //             if (response.status !== 200) {
+    //                 //setError
+    //                 return
+    //             }
 
-            } catch (err) {
+    //             setProducts(response.data.products)
 
-                console.log(err)
-            }
-        }
+    //         } catch (err) {
 
-        getProduct()
+    //             console.log(err)
+    //         }
+    //     }
 
-    }, [id])
+    //     getProduct()
+
+    // }, [id])
 
     return (
         <div>
             <h2>Products</h2>
-            <div className="grid grid-cols-12 gap-2 py-2">
-                {
-                    products.length !== 0 ?
-                        products.map(product => <ProductCard key={product.id} product={product} />) : null
-                }
-            </div>
+            <ErrorBoundary fallback={<ErrorFallback>{errorMsg}</ErrorFallback>}>
+                <ProductsList id={id} />
+            </ErrorBoundary>
         </div>
     )
 }
