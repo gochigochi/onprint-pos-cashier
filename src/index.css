@@ -10,6 +10,10 @@
   .ghost-button {
     @apply bg-zinc-300 hover:bg-zinc-400 py-4 rounded-lg transition-colors;
   }
+
+  .section-title {
+    @apply text-xl font-semibold;
+  }
 }
 
 * {

@@ -1,15 +1,16 @@
 import { useEffect, useState, useRef } from "react"
-import axios from "axios"
 import { socket } from "./socket"
 import { Route, Routes } from "react-router-dom"
 import Dashboard from "./pages/dashboard/Dashboard"
-import SideBar from "./components/layout/side_bar/SideBar"
 import Categories from "./pages/categories/Categories"
 import Products from "./pages/products/Products"
 import Layout from "./components/layout/Layout"
 import { useDispatch } from "react-redux"
 import { setStatus } from "./store/status/statusSlice"
 import type { AppDispatch } from "./store/store"
+import Reports from "./pages/reports/Reports"
+
+// TODO dynamic imports!
 
 type OrderNotification = {
   id: number
@@ -17,7 +18,6 @@ type OrderNotification = {
 
 function App() {
 
-  // const [connectedToServer, setConnectedToServer] = useState(false)
   const dispatch = useDispatch<AppDispatch>()
   const [newOrdersNotifications, setNewOrdersNotifications] = useState<OrderNotification[]>([])
   const [newOrderId, setNewOrderId] = useState(0)
@@ -81,29 +81,18 @@ function App() {
       socket.off("new-order", handlePrintOrder)
     }
 
-  }, [])
-
-  useEffect(() => {
-    //FETCH PRODUCTS
-    // axios.get("/api/categories")
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err))
-
-    //FETCH ORDERS
-    // axios.get("/api/orders")
-    // .then(res => setUsers(res.data))
-    // .catch(err => console.log(err))
-  }, [])
+  }, [dispatch, notificationSound])
 
   return (
     <Layout>
 
       {/* <SideBar connectedToServer={connectedToServer} /> */}
-      <main className="@container/main flex-1 py-2 px-4 bg-indigo-50/50 overflow-y-auto">
+      <main className="@container/main flex-1 py-6 px-4 bg-indigo-50/50 overflow-y-auto">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/category/:id" element={<Products />} />
+          <Route path="/reports" element={<Reports />} />
         </Routes>
       </main>
 

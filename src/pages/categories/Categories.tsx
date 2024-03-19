@@ -8,7 +8,7 @@ const Categories = () => {
 
     return (
         <div>
-            <h2>Products Categories</h2>
+            <h2 className="section-title">Categories</h2>
             <ErrorBoundary fallback={<ErrorFallback>{errorMsg}</ErrorFallback>}>
                 <CategoriesList />
             </ErrorBoundary>
