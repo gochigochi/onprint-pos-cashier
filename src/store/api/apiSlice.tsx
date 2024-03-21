@@ -3,6 +3,8 @@ import type { Category, Product } from "../../types"
 
 // TODO  recheck getPorductsByCategory Args type (undefined?)
 
+// TODO getTotalOrder, getSalesReport,
+
 export const api = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5173/api/"}),
