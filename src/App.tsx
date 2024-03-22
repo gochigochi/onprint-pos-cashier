@@ -9,6 +9,9 @@ import { useDispatch } from "react-redux"
 import { setStatus } from "./store/status/statusSlice"
 import type { AppDispatch } from "./store/store"
 import Reports from "./pages/reports/Reports"
+// import LocationQR from "./components/location_qr/LocationQR"
+// import { QRCodeCanvas } from "qrcode.react"
+import QRious from "qrious"
 
 // TODO dynamic imports!
 
@@ -49,11 +52,11 @@ const dummyArgs = {
       "first_name": "Diego",
       "last_name": "",
       "company": "",
-      "address_1": "Street 123",
+      "address_1": "Cuba 3138",
       "address_2": "",
       "city": "Buenos Aires",
       "state": "",
-      "postcode": "1661",
+      "postcode": "",
       "country": "Argentina",
       "phone": ""
     },
@@ -303,13 +306,22 @@ function App() {
           <div>CHF.${item.price}</div>
         </div>
       `
-    }).join('');
+    }).join('')
+
+    const url = `https://www.google.com/maps/place/${args.data.shipping.address_1 || ""},+${args.data.shipping.postcode || ""}+${args.data.shipping.city || ""}+${args.data.shipping.country || ""}`
+    console.log("URL.......", url)
+    const qr = new QRious({ value: url })
+    const image = qr.toDataURL()
+    console.log("IMAGE....", image)
 
     const ticket = `
       <div>
         <div class="logo-container">
           <img class="logo" src="/assets/onprint-logo.png" alt="" />
         </div>
+        <div>
+          <img src=${image} alt="" className="w-9 h-9" />
+        <div>
         <h2 class="title">OnPrint POS Demo</h2>
         <div class="company-details">
           <div>Dohlenweg 24,</div>
@@ -417,7 +429,6 @@ function App() {
             </body>
           </html>
         `
-
     const printWindow = windowRef.current.open("")
 
     if (printWindow && ticket) {
@@ -434,8 +445,8 @@ function App() {
   return (
     <Layout>
       <button onClick={() => printOrderDummy(dummyArgs)}>CLICK</button>
+      {/* <LocationQR setImage={setImage} /> */}
 
-      {/* <SideBar connectedToServer={connectedToServer} /> */}
       <main className="@container/main flex-1 py-6 px-4 bg-indigo-50/50 overflow-y-auto">
         <Routes>
           <Route path="/" element={<Dashboard />} />
