@@ -46,7 +46,7 @@ const SideBar = () => {
           </li>
           <li className="text-[10px]">
             <Link
-              to="/"
+              to="/orders"
               onClick={() => setActive("/orders")}
               className={`flex flex-col items-center p-1 hover:bg-zinc-100 rounded-md ${active === "/orders" && "bg-zinc-100"}`}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

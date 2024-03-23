@@ -10,6 +10,7 @@ import { setStatus } from "./store/status/statusSlice"
 import type { AppDispatch } from "./store/store"
 import Reports from "./pages/reports/Reports"
 import QRious from "qrious"
+import Orders from "./pages/orders/Orders"
 
 // TODO dynamic imports!
 
@@ -243,6 +244,7 @@ function App() {
           <Route path="/categories" element={<Categories />} />
           <Route path="/category/:id" element={<Products />} />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/orders" element={<Orders />} />
         </Routes>
       </main>
 

@@ -7,9 +7,7 @@ const ProductsList = ({ id }: { id: string | undefined }) => {
 
     //case not found -404- or sorts
     if (error) throw Error
-
-    console.log("PRODUCTS.....", data)
-
+    
     return (
         <div className="grid grid-cols-12 gap-2 py-2">
             {data?.products.map(product => <ProductCard key={product.id} product={product} />)}
