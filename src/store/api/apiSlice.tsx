@@ -1,10 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import type { Category, Product } from "../../types"
 
-// TODO  recheck getPorductsByCategory Args type (undefined?)
-
-// TODO getTotalOrder, getSalesReport,
-
 const baseUrl = import.meta.env.DEV ? "http://localhost:5173/api/" : "https://onprintpos.diegoui.com.ar/api/"
 
 export const api = createApi({
@@ -19,6 +15,9 @@ export const api = createApi({
         }),
         getOrders: builder.query({
             query: (data) => `orders?page=${data.page}`
+        }),
+        getSalesReport: builder.query({
+            query: (query) => `sales-reports?${query}`
         })
     })
 })
@@ -27,4 +26,5 @@ export const {
     useGetCategoriesQuery, 
     useGetProductsByCategoryQuery,
     useGetOrdersQuery, 
+    useGetSalesReportQuery,
 } = api

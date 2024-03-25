@@ -14,6 +14,10 @@
   .section-title {
     @apply text-xl font-semibold;
   }
+
+  .box {
+    @apply bg-white rounded-md p-4 shadow-md shadow-slate-200;
+  }
 }
 
 @media print {
